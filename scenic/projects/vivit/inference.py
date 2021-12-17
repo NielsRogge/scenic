@@ -137,7 +137,9 @@ def train(
   )
 
   # Take a batch
+  print("Taking batch...")
   train_batch = next(dataset.train_iter)
+  print("Doing a forward pass:")
   # Do a forward pass
   train_state, t_metrics, lr = train_step_pmapped(train_state, train_batch)
   # This will accumulate metrics in TPU memory up to the point that we log
