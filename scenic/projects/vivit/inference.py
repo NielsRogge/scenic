@@ -13,6 +13,8 @@ import jax.numpy as jnp
 import jax.profiler
 import ml_collections
 import numpy as np
+from scenic import app
+from scenic.projects.vivit import model as vivit_model
 from scenic.dataset_lib import dataset_utils
 from scenic.projects.vivit import evaluation_lib
 from scenic.projects.vivit import train_utils as vivit_train_utils
@@ -148,3 +150,32 @@ def train(
   jax.random.normal(jax.random.PRNGKey(0), ()).block_until_ready()
   # Return the train and eval summary after last step for regression testing.
   return train_state, train_summary, eval_summary
+
+
+def get_trainer(trainer_name: str) -> Callable[..., Any]:
+  """Returns trainer given its name."""
+  if trainer_name == 'vivit_trainer':
+    return train
+  raise ValueError(f'Unsupported trainer: {trainer_name}.')
+
+
+def main(rng: jnp.ndarray, config: ml_collections.ConfigDict, workdir: str,
+         writer: metric_writers.MetricWriter):
+  """Main function for the ViViT project."""
+  model_cls = vivit_model.get_model_cls(config.model_name)
+  data_rng, rng = jax.random.split(rng)
+  dataset = train_utils.get_dataset(
+      config, data_rng, dataset_service_address=FLAGS.dataset_service_address)
+  trainer = get_trainer(config.trainer_name)
+
+  trainer(
+      rng=rng,
+      config=config,
+      model_cls=model_cls,
+      dataset=dataset,
+      workdir=workdir,
+      writer=writer)
+
+
+if __name__ == '__main__':
+  app.run(main=main)
