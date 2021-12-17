@@ -196,8 +196,9 @@ def restore_pretrained_checkpoint(
   #                      f'{checkpoint_path}')
         
   print("Restoring training state...")
-  restored_train_state = checkpoints.restore_checkpoint(checkpoint_path, None,
-                                                        step)
+  # restored_train_state = checkpoints.restore_checkpoint(checkpoint_path, None,
+  #                                                       step)
+  restored_train_state = checkpoints.restore_checkpoint(checkpoint_path, None, None)
   
   if restored_train_state is None:
     raise ValueError('No checkpoint for the pretrained model is found in: '
