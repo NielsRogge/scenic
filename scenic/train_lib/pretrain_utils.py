@@ -188,19 +188,21 @@ def restore_pretrained_checkpoint(
   Returns:
     Training state and an int which is the current step.
   """
-  if assert_exist:
-    glob_path = os.path.join(checkpoint_path, 'checkpoint_*')
-    print("we're here")
-    if not gfile.glob(glob_path):
-      raise ValueError('No checkpoint for the pretrained model is found in: '
-                       f'{checkpoint_path}')
+  # if assert_exist:
+  #   glob_path = os.path.join(checkpoint_path, 'checkpoint_*')
+  #   print("we're here")
+  #   if not gfile.glob(glob_path):
+  #     raise ValueError('No checkpoint for the pretrained model is found in: '
+  #                      f'{checkpoint_path}')
         
-  print("hey we are here")
+  print("Restoring training state...")
   restored_train_state = checkpoints.restore_checkpoint(checkpoint_path, None,
                                                         step)
+  
   if restored_train_state is None:
     raise ValueError('No checkpoint for the pretrained model is found in: '
                      f'{checkpoint_path}')
+  print("Done!")
   (restored_params,
    restored_model_state) = get_params_and_model_state_dict(restored_train_state)
   restored_params = flax.core.freeze(restored_params)
