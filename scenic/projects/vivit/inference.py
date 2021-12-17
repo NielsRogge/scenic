@@ -2,7 +2,7 @@
 
 import copy
 import functools
-from typing import Any, Dict, Tuple
+from typing import Any, Callable, Dict, Tuple
 
 from absl import logging
 from clu import metric_writers
