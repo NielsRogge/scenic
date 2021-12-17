@@ -190,9 +190,12 @@ def restore_pretrained_checkpoint(
   """
   if assert_exist:
     glob_path = os.path.join(checkpoint_path, 'checkpoint_*')
+    print("we're here")
     if not gfile.glob(glob_path):
       raise ValueError('No checkpoint for the pretrained model is found in: '
                        f'{checkpoint_path}')
+        
+  print("hey we are here")
   restored_train_state = checkpoints.restore_checkpoint(checkpoint_path, None,
                                                         step)
   if restored_train_state is None:

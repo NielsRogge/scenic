@@ -109,7 +109,7 @@ def get_config():
   # Download pretrained ImageNet checkpoints from here:
   # https://github.com/google-research/scenic/tree/main/scenic/projects/baselines (checkpoint_format = 'scenic')  pylint: disable=line-too-long
   # https://github.com/google-research/vision_transformer (checkpoint_format = 'bigvision')  pylint: disable=line-too-long
-  config.init_from.checkpoint_path = '/content/drive/MyDrive/ViViT/Checkpoints'
+  config.init_from.checkpoint_path = '/content/drive/MyDrive/ViViT/Checkpoints/checkpoint'
   config.init_from.checkpoint_format = 'scenic'
   config.init_from.model_config = ml_collections.ConfigDict()
   config.init_from.model_config.model = ml_collections.ConfigDict()
