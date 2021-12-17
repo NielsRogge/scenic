@@ -4,7 +4,7 @@ import copy
 import functools
 from typing import Any, Callable, Dict, Tuple
 
-from absl import logging
+from absl import flags, logging
 from clu import metric_writers
 from clu import periodic_actions
 from flax import jax_utils
@@ -23,6 +23,8 @@ from scenic.train_lib import optimizers
 from scenic.train_lib import pretrain_utils
 from scenic.train_lib import train_utils
 
+
+FLAGS = flags.FLAGS
 
 def train(
     *,
