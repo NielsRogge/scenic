@@ -327,6 +327,19 @@ class VisionTransformer(nn.Module):
                attn_mask: Optional[jnp.ndarray] = None,
                *,
                deterministic: bool = True) -> jnp.ndarray:
+    from huggingface_hub import HfApi
+    api = HfApi()
+
+    import torch
+    torch.save(torch.from_numpy(x), "owlvit_pixel_values.pt")
+
+    api.upload_file(
+        path_or_fileobj="owlvit_pixel_values.pt",
+        path_in_repo="owlvit_pixel_values.pt",
+        repo_id="nielsr/test-image",
+        repo_type="dataset",
+    )
+
     x = nn.Conv(self.features,
                 kernel_size=(self.patch_size, self.patch_size),
                 strides=(self.patch_size, self.patch_size),
@@ -384,6 +397,20 @@ class TextEncoder(nn.Module):
   @nn.compact
   def __call__(
       self, text: jnp.ndarray, *, deterministic: bool = True) -> jnp.ndarray:
+    
+    from huggingface_hub import HfApi
+    api = HfApi()
+
+    import torch
+    torch.save(torch.from_numpy(text), "owlvit_input_ids.pt")
+
+    api.upload_file(
+        path_or_fileobj="owlvit_input_ids.pt",
+        path_in_repo="owlvit_input_ids.pt",
+        repo_id="nielsr/test-image",
+        repo_type="dataset",
+    )
+
     positional_embedding = self.param('positional_embedding',
                                       jax.nn.initializers.zeros,
                                       (text.shape[1], self.features))
