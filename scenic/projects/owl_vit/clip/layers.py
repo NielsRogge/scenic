@@ -340,6 +340,9 @@ class VisionTransformer(nn.Module):
     #     repo_type="dataset",
     # )
 
+    print("Shape of pixel values:", x.shape)
+    print("First values of pixel values:", x[0,:3,:3,0])
+
     x = nn.Conv(self.features,
                 kernel_size=(self.patch_size, self.patch_size),
                 strides=(self.patch_size, self.patch_size),
