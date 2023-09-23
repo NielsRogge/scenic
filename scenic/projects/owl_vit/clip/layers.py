@@ -391,12 +391,13 @@ class VisionTransformer(nn.Module):
             deterministic=deterministic)
 
     if self.out_features is not None:
+      print("we are here")
       x = LayerNorm(name='ln_post')(x[:, 0])
       x = nn.Dense(self.out_features, use_bias=False, name='proj')(x)
     else:
       x = LayerNorm(name='ln_post')(x)
       print("Shape of vision features after final layernorm:", x.shape)
-      print("First values of vision features after final layernorm:", x[0:3,:3])
+      print("First values of vision features after final layernorm:", x[0,:3,:3])
 
     return x, feature_map  # pytype: disable=bad-return-type  # jax-ndarray
 
