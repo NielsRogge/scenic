@@ -145,7 +145,7 @@ def _create_image_figure(image: np.ndarray,
   return plot
 
 
-def _plot_boxes(plot: plotting.Figure,
+def _plot_boxes(plot,
                 boxes: np.ndarray,
                 line_width: float = 3,
                 initial_color: str = '#00000000') -> models.ColumnDataSource:
