@@ -327,18 +327,18 @@ class VisionTransformer(nn.Module):
                attn_mask: Optional[jnp.ndarray] = None,
                *,
                deterministic: bool = True) -> jnp.ndarray:
-    from huggingface_hub import HfApi
-    api = HfApi()
+    # from huggingface_hub import HfApi
+    # api = HfApi()
 
-    import torch
-    torch.save(torch.from_numpy(x), "owlvit_pixel_values.pt")
+    # import torch
+    # torch.save(torch.from_numpy(x), "owlvit_pixel_values.pt")
 
-    api.upload_file(
-        path_or_fileobj="owlvit_pixel_values.pt",
-        path_in_repo="owlvit_pixel_values.pt",
-        repo_id="nielsr/test-image",
-        repo_type="dataset",
-    )
+    # api.upload_file(
+    #     path_or_fileobj="owlvit_pixel_values.pt",
+    #     path_in_repo="owlvit_pixel_values.pt",
+    #     repo_id="nielsr/test-image",
+    #     repo_type="dataset",
+    # )
 
     x = nn.Conv(self.features,
                 kernel_size=(self.patch_size, self.patch_size),
@@ -373,6 +373,7 @@ class VisionTransformer(nn.Module):
       x = nn.Dense(self.out_features, use_bias=False, name='proj')(x)
     else:
       x = LayerNorm(name='ln_post')(x)
+      print("Shape of vision features after final layernorm:", x.shape)
 
     return x, feature_map  # pytype: disable=bad-return-type  # jax-ndarray
 
@@ -398,18 +399,18 @@ class TextEncoder(nn.Module):
   def __call__(
       self, text: jnp.ndarray, *, deterministic: bool = True) -> jnp.ndarray:
     
-    from huggingface_hub import HfApi
-    api = HfApi()
+    # from huggingface_hub import HfApi
+    # api = HfApi()
 
-    import torch
-    torch.save(torch.from_numpy(text), "owlvit_input_ids.pt")
+    # import torch
+    # torch.save(torch.from_numpy(text), "owlvit_input_ids.pt")
 
-    api.upload_file(
-        path_or_fileobj="owlvit_input_ids.pt",
-        path_in_repo="owlvit_input_ids.pt",
-        repo_id="nielsr/test-image",
-        repo_type="dataset",
-    )
+    # api.upload_file(
+    #     path_or_fileobj="owlvit_input_ids.pt",
+    #     path_in_repo="owlvit_input_ids.pt",
+    #     repo_id="nielsr/test-image",
+    #     repo_type="dataset",
+    # )
 
     positional_embedding = self.param('positional_embedding',
                                       jax.nn.initializers.zeros,
@@ -428,6 +429,7 @@ class TextEncoder(nn.Module):
             attn_mask=mask,
             deterministic=deterministic)
     x = LayerNorm(name='ln_final')(x)
+    print("Shape of text features after final layernorm:", x.shape)
     x = x[jnp.arange(x.shape[0]), text.argmax(-1)]
     x = nn.Dense(self.out_features, use_bias=False, name='text_projection')(x)
     return x
