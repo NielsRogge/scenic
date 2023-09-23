@@ -308,7 +308,7 @@ class TextZeroShotDetectionModule(nn.Module):
     image_features = jnp.reshape(feature_map, (b, h * w, d))
 
     print("Shape of image features:", image_features.shape)
-    print("First values of image features:", image_features[0,:3,:3])
+    jax.debug.print("First values of image features:", image_features[0,:3,:3])
 
     # Embed queries:
     print("Shape of text queries:", text_queries.shape)
@@ -318,7 +318,7 @@ class TextZeroShotDetectionModule(nn.Module):
     query_mask = (text_queries[..., 0] > 0).astype(jnp.float32)
 
     print("Shape of text features:", query_embeddings.shape)
-    print("First values of text features:", query_embeddings[0,:3,:3])
+    jax.debug.print("First values of text features:", query_embeddings[0,:3,:3])
 
     outputs = {
         'feature_map': feature_map,
