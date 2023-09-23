@@ -254,10 +254,20 @@ class ResidualAttentionBlock(nn.Module):
       x: jnp.ndarray,
       attn_mask: Optional[jnp.ndarray] = None,
       *,
-      deterministic: bool = True) -> jnp.ndarray:
+      deterministic: bool = True,
+      print_values: bool = False) -> jnp.ndarray:
+    
+    if print_values:
+      print("Shape of input to ResidualAttentionBlock:", x.shape)
+      print("First values of input to ResidualAttentionBlock:", x[0,:3,:3])
+
     xn = LayerNorm(name='ln_0')(x)
     y = nn.SelfAttention(
         self.num_heads, name='attn', deterministic=deterministic)(xn, attn_mask)
+
+    if print_values:
+      print("Shape of attention output:", y.shape)
+      print("First values of attention output:", y[0,:3,:3])
 
     # Droplayer.
     drop_pattern = self.get_drop_pattern(y, deterministic)
@@ -299,7 +309,7 @@ class Transformer(nn.Module):
           num_heads=self.num_heads,
           droplayer_p=droplayer_p,
           name=f'resblocks_{i}',
-      )(x, attn_mask, deterministic=deterministic)
+      )(x, attn_mask, deterministic=deterministic, print_values=i==0)
     return x
 
 
