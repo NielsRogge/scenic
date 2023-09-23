@@ -349,19 +349,21 @@ class VisionTransformer(nn.Module):
                 use_bias=False, name='conv1')(x)
     x = x.reshape(x.shape[0], -1, x.shape[-1])
     scale = 1.0 / jnp.sqrt(self.features)
+    print("First values of patch embeddings:", x[0,:3,:3])
     class_embedding = self.param('class_embedding',
                                  jax.nn.initializers.normal(stddev=scale),
                                  (self.features,))
     x = jnp.concatenate((jnp.tile(class_embedding[None, None, :],
                                   (x.shape[0], 1, 1)), x),
                         axis=1)
+    print("First values of patch embeddings after adding CLS token:", x[0,:3,:3])
     positional_embedding = self.param('positional_embedding',
                                       jax.nn.initializers.normal(stddev=scale),
                                       (x.shape[1], self.features))
     x = x + positional_embedding[None]
 
     print("Shape of patch embeddings:", x.shape)
-    print("First values of patch embeddings:", x[0,:3,:3])
+    print("First values of final patch embeddings:", x[0,:3,:3])
 
     x = LayerNorm(name='ln_pre')(x)
     x = feature_map = Transformer(
