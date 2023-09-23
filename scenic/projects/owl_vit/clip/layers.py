@@ -327,18 +327,18 @@ class VisionTransformer(nn.Module):
                attn_mask: Optional[jnp.ndarray] = None,
                *,
                deterministic: bool = True) -> jnp.ndarray:
-    # from huggingface_hub import HfApi
-    # api = HfApi()
+    from huggingface_hub import HfApi
+    api = HfApi()
 
-    # import torch
-    # torch.save(torch.from_numpy(x), "owlvit_pixel_values.pt")
+    import torch
+    torch.save(torch.from_numpy(x), "owlvit_pixel_values.pt")
 
-    # api.upload_file(
-    #     path_or_fileobj="owlvit_pixel_values.pt",
-    #     path_in_repo="owlvit_pixel_values.pt",
-    #     repo_id="nielsr/test-image",
-    #     repo_type="dataset",
-    # )
+    api.upload_file(
+        path_or_fileobj="owlvit_pixel_values.pt",
+        path_in_repo="owlvit_pixel_values.pt",
+        repo_id="nielsr/test-image",
+        repo_type="dataset",
+    )
 
     print("Shape of pixel values:", x.shape)
     print("First values of pixel values:", x[0,:3,:3,0])
