@@ -390,6 +390,9 @@ class VisionTransformer(nn.Module):
             x,
             deterministic=deterministic)
 
+    print("Shape of final vision Transformer output:", x.shape)
+    print("First values:", x[0,:3,:3])
+
     if self.out_features is not None:
       print("we are here")
       x = LayerNorm(name='ln_post')(x[:, 0])
