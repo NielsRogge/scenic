@@ -360,6 +360,7 @@ class VisionTransformer(nn.Module):
                                       (x.shape[1], self.features))
     x = x + positional_embedding[None]
 
+    print("Shape of patch embeddings:", x.shape)
     print("First values of patch embeddings:", x[0,:3,:3])
 
     x = LayerNorm(name='ln_pre')(x)
