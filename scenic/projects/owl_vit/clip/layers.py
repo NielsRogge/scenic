@@ -345,7 +345,6 @@ class VisionTransformer(nn.Module):
                 strides=(self.patch_size, self.patch_size),
                 use_bias=False, name='conv1')(x)
     x = x.reshape(x.shape[0], -1, x.shape[-1])
-    print("Shape of patch embeddings:", x.shape)
     scale = 1.0 / jnp.sqrt(self.features)
     class_embedding = self.param('class_embedding',
                                  jax.nn.initializers.normal(stddev=scale),
@@ -357,6 +356,8 @@ class VisionTransformer(nn.Module):
                                       jax.nn.initializers.normal(stddev=scale),
                                       (x.shape[1], self.features))
     x = x + positional_embedding[None]
+
+    print("First values of patch embeddings:", x[0,:3,:3])
 
     x = LayerNorm(name='ln_pre')(x)
     x = feature_map = Transformer(
@@ -431,7 +432,7 @@ class TextEncoder(nn.Module):
             deterministic=deterministic)
     x = LayerNorm(name='ln_final')(x)
     print("Shape of text features after final layernorm:", x.shape)
-    print("First values of text features after final layernorm:", x[0:3,:3])
+    print("First values of text features after final layernorm:", x[0,:3,:3])
     x = x[jnp.arange(x.shape[0]), text.argmax(-1)]
     x = nn.Dense(self.out_features, use_bias=False, name='text_projection')(x)
     return x
