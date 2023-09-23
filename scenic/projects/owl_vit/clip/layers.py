@@ -279,6 +279,11 @@ class ResidualAttentionBlock(nn.Module):
     # Droplayer.
     drop_pattern = self.get_drop_pattern(x, deterministic)
     x = y * (1.0 - drop_pattern) + x
+
+    if print_values:
+      print("Shape of encoder output:", x.shape)
+      print("First values of encoder output:", x[0,:3,:3])
+
     return x
 
 
