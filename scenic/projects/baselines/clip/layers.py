@@ -452,6 +452,8 @@ class CLIP(nn.Module):
     x = y = None
     if image is not None:
       x = self.encode_image(image, normalize)
+      print("Shape of CLIP image features:", x.shape)
+      print("First values of CLIP image features:", x[0,:3,3])
     if text is not None:
       y = self.encode_text(text, normalize)
     return x, y
