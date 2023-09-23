@@ -305,10 +305,14 @@ class TextZeroShotDetectionModule(nn.Module):
     b, h, w, d = feature_map.shape
     image_features = jnp.reshape(feature_map, (b, h * w, d))
 
+    print("Shape of image features:", image_features.shape)
+
     # Embed queries:
     query_embeddings = self.text_embedder(text_queries, train)
     # If first token is 0, then this is a padding query [b, q].
     query_mask = (text_queries[..., 0] > 0).astype(jnp.float32)
+
+    print("Shape of text features:", query_embeddings.shape)
 
     outputs = {
         'feature_map': feature_map,
