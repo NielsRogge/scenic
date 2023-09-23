@@ -374,6 +374,7 @@ class VisionTransformer(nn.Module):
     else:
       x = LayerNorm(name='ln_post')(x)
       print("Shape of vision features after final layernorm:", x.shape)
+      print("First values of vision features after final layernorm:", x[0:3,:3])
 
     return x, feature_map  # pytype: disable=bad-return-type  # jax-ndarray
 
@@ -430,6 +431,7 @@ class TextEncoder(nn.Module):
             deterministic=deterministic)
     x = LayerNorm(name='ln_final')(x)
     print("Shape of text features after final layernorm:", x.shape)
+    print("First values of text features after final layernorm:", x[0:3,:3])
     x = x[jnp.arange(x.shape[0]), text.argmax(-1)]
     x = nn.Dense(self.out_features, use_bias=False, name='text_projection')(x)
     return x
