@@ -489,7 +489,11 @@ class CLIP(nn.Module):
                deterministic: bool = True) -> Tuple[jnp.ndarray, jnp.ndarray]:
     x = y = None
     if image is not None:
+      print("Shape of image going into CLIP:", image.shape)
       x = self.encode_image(image, normalize, deterministic=deterministic)
+      print("Shape of image features within CLIP:", x.shape)
     if text is not None:
+      print("Shape of text going into CLIP:", text.shape)
       y = self.encode_text(text, normalize, deterministic=deterministic)
+      print("Shape of text features within CLIP:", y.shape)
     return x, y
