@@ -314,7 +314,7 @@ class Transformer(nn.Module):
           num_heads=self.num_heads,
           droplayer_p=droplayer_p,
           name=f'resblocks_{i}',
-      )(x, attn_mask, deterministic=deterministic, print_values=i==0)
+      )(x, attn_mask, deterministic=deterministic, print_values=i in [0,11],)
     return x
 
 
