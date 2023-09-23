@@ -332,6 +332,7 @@ class VisionTransformer(nn.Module):
                 strides=(self.patch_size, self.patch_size),
                 use_bias=False, name='conv1')(x)
     x = x.reshape(x.shape[0], -1, x.shape[-1])
+    print("Shape of patch embeddings:", x.shape)
     scale = 1.0 / jnp.sqrt(self.features)
     class_embedding = self.param('class_embedding',
                                  jax.nn.initializers.normal(stddev=scale),
