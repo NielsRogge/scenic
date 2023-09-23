@@ -117,7 +117,7 @@ def create_image_conditional_figure(query_image: np.ndarray,
 def _create_image_figure(image: np.ndarray,
                          fig_size: int = 900,
                          title: str = '',
-                         tools: str = '') -> plotting.Figure:
+                         tools: str = ''):
   """Creates a Bokeh figure showing an image."""
   # Determine relative width and height from padding. We assume that padding is
   # added on the bottom or right and has value 0.5:
