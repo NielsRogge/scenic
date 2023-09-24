@@ -312,8 +312,9 @@ class ClipImageTextEmbedder(ImageTextEmbedderBase):
     if txt_emb is not None and len(texts_shape) > 2:
       txt_emb = txt_emb.reshape(texts_shape[:-1] + (-1,))
 
-    print("Shape of image embedding after merge class token:", img_emb.shape)
-    print("First values of image embedding after merge class token:", img_emb[0, :3, :3])
+    if img_emb is not None:
+      print("Shape of image embedding after merge class token:", img_emb.shape)
+      print("First values of image embedding after merge class token:", img_emb[0, :3, :3])
 
     return img_emb, txt_emb
 
