@@ -293,8 +293,9 @@ class ClipImageTextEmbedder(ImageTextEmbedderBase):
     img_emb, txt_emb = model(
         images, texts, normalize=False, deterministic=not train)
     # Drop or merge class embedding token.
-    print("Shape of image embedding before merge class token:", img_emb.shape)
-    print("First values of image embedding before merge class token:", img_emb[0, :3, :3])
+    if img_emb is not None:
+      print("Shape of image embedding before merge class token:", img_emb.shape)
+      print("First values of image embedding before merge class token:", img_emb[0, :3, :3])
     if img_emb is not None:
       merge_class_token = self.embed_configs.get('merge_class_token', 'drop')
       print("Merge class token:", merge_class_token)
