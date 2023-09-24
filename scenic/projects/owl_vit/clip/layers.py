@@ -357,7 +357,7 @@ class VisionTransformer(nn.Module):
 
     print("Shape of pixel values:", x.shape)
     print("First values of pixel values:", x[0,:3,:3,0])
-    print("Mean value of patch embeddings:", x.mean())
+    print("Mean value of pixel values:", x.mean())
 
     x = nn.Conv(self.features,
                 kernel_size=(self.patch_size, self.patch_size),
@@ -381,8 +381,21 @@ class VisionTransformer(nn.Module):
                                       (x.shape[1], self.features))
     x = x + positional_embedding[None]
 
-    print("Shape of patch embeddings:", x.shape)
+    print("Shape of final patch embeddings:", x.shape)
     print("First values of final patch embeddings:", x[0,:3,:3])
+
+    import torch
+    patch_embeddings = torch.from_numpy(x)
+    torch.save(patch_embeddings, "owlv2_patch_embeddings.pt")
+
+    from huggingface_hub import HfApi
+    api = HfApi()
+    api.upload_file(
+        path_or_fileobj="owlv2_patch_embeddings.pt",
+        path_in_repo="owlv2_patch_embeddings.pt",
+        repo_id="nielsr/test-image",
+        repo_type="dataset",
+    )
 
     x = LayerNorm(name='ln_pre')(x)
     x = feature_map = Transformer(
