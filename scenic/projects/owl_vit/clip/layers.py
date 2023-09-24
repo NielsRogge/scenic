@@ -384,21 +384,25 @@ class VisionTransformer(nn.Module):
     print("Shape of final patch embeddings:", x.shape)
     print("First values of final patch embeddings:", x[0,:3,:3])
 
-    import torch
-    import numpy as np
-    patch_embeddings = torch.from_numpy(np.array(x))
-    torch.save(patch_embeddings, "owlv2_patch_embeddings.pt")
+    # import torch
+    # import numpy as np
+    # patch_embeddings = torch.from_numpy(np.array(x))
+    # torch.save(patch_embeddings, "owlv2_patch_embeddings.pt")
 
-    from huggingface_hub import HfApi
-    api = HfApi()
-    api.upload_file(
-        path_or_fileobj="owlv2_patch_embeddings.pt",
-        path_in_repo="owlv2_patch_embeddings.pt",
-        repo_id="nielsr/test-image",
-        repo_type="dataset",
-    )
+    # from huggingface_hub import HfApi
+    # api = HfApi()
+    # api.upload_file(
+    #     path_or_fileobj="owlv2_patch_embeddings.pt",
+    #     path_in_repo="owlv2_patch_embeddings.pt",
+    #     repo_id="nielsr/test-image",
+    #     repo_type="dataset",
+    # )
 
     x = LayerNorm(name='ln_pre')(x)
+
+    print("Shape of patch embeddings after pre layernorm:", x.shape)
+    print("First values of patch embeddings after pre layernorm:", x[0,:3,:3])
+
     x = feature_map = Transformer(
         features=self.features,
         num_layers=self.num_layers,
