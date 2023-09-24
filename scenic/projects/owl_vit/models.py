@@ -270,7 +270,6 @@ class TextZeroShotDetectionModule(nn.Module):
       which is num_dimensions instead of num_tokens.
     """
     _, text_features = self._embedder(texts=text_queries, train=train)
-    print("Shape of text features:", text_features.shape)
     return text_features  # pytype: disable=bad-return-type  # jax-ndarray
 
   def __call__(self,
@@ -310,6 +309,8 @@ class TextZeroShotDetectionModule(nn.Module):
     # Embed queries:
     print("Text queries:", text_queries)
     query_embeddings = self.text_embedder(text_queries, train)
+    print("Shape of query embeddings:", query_embeddings.shape)
+    print("First values of query embeddings:", query_embeddings[0, :3, :3])
     # If first token is 0, then this is a padding query [b, q].
     query_mask = (text_queries[..., 0] > 0).astype(jnp.float32)
 
