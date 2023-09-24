@@ -402,6 +402,7 @@ class VisionTransformer(nn.Module):
 
     print("Shape of patch embeddings after pre layernorm:", x.shape)
     print("First values of patch embeddings after pre layernorm:", x[0,:3,:3])
+    print("Dtype of patch embeddings after pre layernorm:", x.dtype)
 
     x = feature_map = Transformer(
         features=self.features,
