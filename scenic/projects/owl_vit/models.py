@@ -357,6 +357,11 @@ class TextZeroShotDetectionModule(nn.Module):
               outputs['pred_boxes'],
               true_boxes=true_boxes))
 
+    print("Predicted logits:", outputs['pred_logits'].shape)
+    print("First values of predicted logits:", outputs['pred_logits'][0, :3, :3])
+    print("Predicted boxes:", outputs['pred_boxes'].shape)
+    print("First values of predicted boxes:", outputs['pred_boxes'][0, :3, :3])
+
     return outputs
 
   def load(
