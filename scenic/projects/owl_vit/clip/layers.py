@@ -346,11 +346,11 @@ class VisionTransformer(nn.Module):
     api = HfApi()
 
     import torch
-    torch.save(torch.from_numpy(x), "owlvit_pixel_values.pt")
+    torch.save(torch.from_numpy(x), "owlvit_pixel_values_960.pt")
 
     api.upload_file(
         path_or_fileobj="owlvit_pixel_values.pt",
-        path_in_repo="owlvit_pixel_values.pt",
+        path_in_repo="owlvit_pixel_values_960.pt",
         repo_id="nielsr/test-image",
         repo_type="dataset",
     )
