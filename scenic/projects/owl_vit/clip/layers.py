@@ -357,6 +357,7 @@ class VisionTransformer(nn.Module):
 
     print("Shape of pixel values:", x.shape)
     print("First values of pixel values:", x[0,:3,:3,0])
+    print("Mean value of patch embeddings:", x.mean())
 
     x = nn.Conv(self.features,
                 kernel_size=(self.patch_size, self.patch_size),
