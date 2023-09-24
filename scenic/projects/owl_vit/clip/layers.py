@@ -342,18 +342,18 @@ class VisionTransformer(nn.Module):
                attn_mask: Optional[jnp.ndarray] = None,
                *,
                deterministic: bool = True) -> jnp.ndarray:
-    from huggingface_hub import HfApi
-    api = HfApi()
+    # from huggingface_hub import HfApi
+    # api = HfApi()
 
-    import torch
-    torch.save(torch.from_numpy(x), "owlvit_pixel_values_960.pt")
+    # import torch
+    # torch.save(torch.from_numpy(x), "owlvit_pixel_values_960.pt")
 
-    api.upload_file(
-        path_or_fileobj="owlvit_pixel_values_960.pt",
-        path_in_repo="owlvit_pixel_values_960.pt",
-        repo_id="nielsr/test-image",
-        repo_type="dataset",
-    )
+    # api.upload_file(
+    #     path_or_fileobj="owlvit_pixel_values_960.pt",
+    #     path_in_repo="owlvit_pixel_values_960.pt",
+    #     repo_id="nielsr/test-image",
+    #     repo_type="dataset",
+    # )
 
     print("Shape of pixel values:", x.shape)
     print("First values of pixel values:", x[0,:3,:3,0])
@@ -362,6 +362,9 @@ class VisionTransformer(nn.Module):
                 kernel_size=(self.patch_size, self.patch_size),
                 strides=(self.patch_size, self.patch_size),
                 use_bias=False, name='conv1')(x)
+    
+    print("Shape of raw patch embeddings:", x.shape)
+
     x = x.reshape(x.shape[0], -1, x.shape[-1])
     scale = 1.0 / jnp.sqrt(self.features)
     print("First values of patch embeddings:", x[0,:3,:3])
