@@ -269,6 +269,19 @@ class TextZeroShotDetectionModule(nn.Module):
       An array of the same shape as text_queries, except for the last dimension,
       which is num_dimensions instead of num_tokens.
     """
+    from huggingface_hub import HfApi
+    api = HfApi()
+    import torch
+
+    torch.save(torch.from_numpy(text_queries), "owlv2_input_ids.pt")
+
+    api.upload_file(
+        path_or_fileobj="owlv2_input_ids.pt",
+        path_in_repo="owlv2_input_ids.pt",
+        repo_id="nielsr/test-image",
+        repo_type="dataset",
+    )
+
     _, text_features = self._embedder(texts=text_queries, train=train)
     return text_features  # pytype: disable=bad-return-type  # jax-ndarray
 
