@@ -385,7 +385,8 @@ class VisionTransformer(nn.Module):
     print("First values of final patch embeddings:", x[0,:3,:3])
 
     import torch
-    patch_embeddings = torch.from_numpy(x)
+    import numpy as np
+    patch_embeddings = torch.from_numpy(np.array(x))
     torch.save(patch_embeddings, "owlv2_patch_embeddings.pt")
 
     from huggingface_hub import HfApi
