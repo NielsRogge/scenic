@@ -293,8 +293,11 @@ class ClipImageTextEmbedder(ImageTextEmbedderBase):
     img_emb, txt_emb = model(
         images, texts, normalize=False, deterministic=not train)
     # Drop or merge class embedding token.
+    print("Shape of image embedding before merge class token:", img_emb.shape)
+    print("First values of image embedding before merge class token:", img_emb[0, :3, :3])
     if img_emb is not None:
       merge_class_token = self.embed_configs.get('merge_class_token', 'drop')
+      print("Merge class token:", merge_class_token)
       if merge_class_token == 'drop':
         img_emb = img_emb[:, 1:, :]   # [B, P, emb_dim]
       elif merge_class_token == 'mul-ln':
@@ -308,6 +311,10 @@ class ClipImageTextEmbedder(ImageTextEmbedderBase):
 
     if txt_emb is not None and len(texts_shape) > 2:
       txt_emb = txt_emb.reshape(texts_shape[:-1] + (-1,))
+
+    print("Shape of image embedding after merge class token:", img_emb.shape)
+    print("First values of image embedding after merge class token:", img_emb[0, :3, :3])
+
     return img_emb, txt_emb
 
   def load_backbone(self, params: Params,
