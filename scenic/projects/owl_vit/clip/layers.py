@@ -349,7 +349,7 @@ class VisionTransformer(nn.Module):
     torch.save(torch.from_numpy(x), "owlvit_pixel_values_960.pt")
 
     api.upload_file(
-        path_or_fileobj="owlvit_pixel_values.pt",
+        path_or_fileobj="owlvit_pixel_values_960.pt",
         path_in_repo="owlvit_pixel_values_960.pt",
         repo_id="nielsr/test-image",
         repo_type="dataset",
