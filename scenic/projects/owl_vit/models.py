@@ -149,7 +149,7 @@ class TextZeroShotDetectionModule(nn.Module):
     objectness_logits = self._objectness_head(image_features)
 
     print("Shape of objectness logits:", objectness_logits[..., 0].shape)
-    print("First values of objectness logits:", objectness_logits[..., 0][0, 0, :3, :3])
+    print("First values of objectness logits:", objectness_logits[..., 0][:3, :3])
 
     return {'objectness_logits': objectness_logits[..., 0]}
 
