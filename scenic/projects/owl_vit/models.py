@@ -147,6 +147,9 @@ class TextZeroShotDetectionModule(nn.Module):
     if self.objectness_head_configs.stop_gradient:
       image_features = jax.lax.stop_gradient(image_features)
     objectness_logits = self._objectness_head(image_features)
+
+    print("Shape of objectness logits:", objectness_logits.shape)
+
     return {'objectness_logits': objectness_logits[..., 0]}
 
   def box_predictor(
